@@ -1,0 +1,50 @@
+package com.salon.controller;
+
+import com.salon.exception.UserException;
+import com.salon.model.User;
+import com.salon.service.UserService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequiredArgsConstructor
+public class UserController {
+
+    private final UserService userService;
+
+    @PostMapping("/api/users")
+    public ResponseEntity<User> createUser(@RequestBody @Valid User user){
+        User savedUser = userService.createUser(user);
+        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/api/users")
+    public ResponseEntity<List<User>> getUsers(){
+        List<User> users = userService.getAllUsers();
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+    @GetMapping("/api/users/{userId}")
+    public ResponseEntity<User> getUserById(@PathVariable long userId) throws UserException {
+        User user = userService.getUserById(userId);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @PutMapping("/api/users/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable long id, @RequestBody User user) throws UserException {
+        User updatedUser = userService.updateUser(id, user);
+        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/api/users/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable long id) throws UserException {
+        userService.deleteUser(id);
+        return new ResponseEntity<>("user deleted",HttpStatus.ACCEPTED);
+    }
+
+}
