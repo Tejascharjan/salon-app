@@ -6,7 +6,7 @@ spring:
     name: booking-service
 
   datasource:
-    url: jdbc:mysql://localhost:3306/salon_booking
+    url: jdbc:mysql://localhost:3306/salon_booking?createDatabaseIfNotExist=true
     username: root
     password: tejastc
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -16,3 +16,21 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+  rabbitmq:
+    port: 5672
+    host: localhost
+    username: guest
+    password: guest
+
+eureka:
+  instance:
+    hostname: localhost
+    port: 5005
+    preferIpAddress: false
+
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8070/eureka

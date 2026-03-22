@@ -1,0 +1,192 @@
+services:
+  # --- DATABASES ---
+  userdb:
+    image: mysql
+    container_name: userdb
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: userdb
+    networks:
+      - salon
+
+  bookingdb:
+    image: mysql
+    container_name: bookingdb
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: bookingdb
+    networks:
+      - salon
+
+  categorydb:
+    image: mysql
+    container_name: categorydb
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: categorydb
+    networks:
+      - salon
+
+  paymentdb:
+    image: mysql
+    container_name: paymentdb
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: paymentdb
+    networks:
+      - salon
+
+  salondb:
+    image: mysql
+    container_name: salondb
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: salondb
+    networks:
+      - salon
+
+  service-offeringdb:
+    image: mysql
+    container_name: service-offeringdb
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: service-offeringdb
+    networks:
+      - salon
+
+  eurekaserver:
+    image: "tejas230701/salon-eurekaserver:v1"
+    container_name: eurekaserver
+    ports:
+      - "8070:8070"
+    environment:
+      EUREKA_CLIENT_REGISTER_WITH_EUREKA: "false"
+      EUREKA_CLIENT_FETCH_REGISTRY: "false"
+    networks:
+      - salon
+
+  user:
+    image: "tejas230701/salon-user:v1"
+    container_name: user
+    ports:
+      - "5001:5001"
+    depends_on:
+      - userdb
+      - eurekaserver
+    environment:
+      SPRING_APPLICATION_NAME: "user-service"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://userdb:3306/userdb"
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
+    networks:
+      - salon
+
+  booking:
+    image: "tejas230701/salon-booking:v1"
+    container_name: booking
+    ports:
+      - "5005:5005"
+    depends_on:
+      - bookingdb
+      - eurekaserver
+    environment:
+      SPRING_APPLICATION_NAME: "booking-service"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://bookingdb:3306/bookingdb"
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
+    networks:
+      - salon
+
+  category:
+    image: "tejas230701/salon-category:v1"
+    container_name: category
+    ports:
+      - "5003:5003"
+    depends_on:
+      - categorydb
+      - eurekaserver
+    environment:
+      SPRING_APPLICATION_NAME: "category-service"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://categorydb:3306/categorydb"
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
+    networks:
+      - salon
+
+  payment:
+    image: "tejas230701/salon-payment:v1"
+    container_name: payment
+    ports:
+      - "5006:5006"
+    depends_on:
+      - paymentdb
+      - eurekaserver
+    environment:
+      SPRING_APPLICATION_NAME: "payment-service"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://paymentdb:3306/paymentdb"
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
+    networks:
+      - salon
+
+  salon:
+    image: "tejas230701/salon-service:v1"
+    container_name: salon
+    ports:
+      - "5002:5002"
+    depends_on:
+      - salondb
+      - eurekaserver
+    environment:
+      SPRING_APPLICATION_NAME: "salon-service"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://salondb:3306/salondb"
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
+    networks:
+      - salon
+
+  service-offering:
+    image: "tejas230701/salon-service-offering:v1"
+    container_name: service-offering
+    ports:
+      - "5004:5004"
+    depends_on:
+      - service-offeringdb
+      - eurekaserver
+    environment:
+      SPRING_APPLICATION_NAME: "service-offering"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://service-offeringdb:3306/service-offeringdb"
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
+    networks:
+      - salon
+
+  gatewayserver:
+    image: "tejas230701/salon-getwayserver:v1"
+    container_name: gatewayserver
+    ports:
+      - "5000:5000"
+    depends_on:
+      - eurekaserver
+    environment:
+      SPRING_APPLICATION_NAME: "gateway-server"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
+    networks:
+      - salon
+
+networks:
+  salon:
+    driver: "bridge"

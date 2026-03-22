@@ -1,9 +1,7 @@
 package com.salon.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.salon.domain.UserRole;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -36,8 +34,8 @@ public class User {
     private String password;
     private String phone;
 
-    @NotBlank(message = "role is mandatory")
-    private String role;
+    @Column(nullable = false)
+    private UserRole role;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

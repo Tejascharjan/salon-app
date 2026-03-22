@@ -1,18 +1,30 @@
 server:
-  port: 5002
+     port: 5002
 
 spring:
-  application:
-    name: salon-service
+     application:
+          name: salon-service
 
-  datasource:
-    url: jdbc:mysql://localhost:3306/salon_management
-    username: root
-    password: tejastc
-    driver-class-name: com.mysql.cj.jdbc.Driver
+     datasource:
+          url: jdbc:mysql://localhost:3306/salon_management?createDatabaseIfNotExist=true
+          username: root
+          password: tejastc
+          driver-class-name: com.mysql.cj.jdbc.Driver
 
-  jpa:
-    database-platform: org.hibernate.dialect.MySQLDialect
-    hibernate:
-      ddl-auto: update
-    show-sql: true
+     jpa:
+          database-platform: org.hibernate.dialect.MySQLDialect
+          hibernate:
+               ddl-auto: update
+          show-sql: true
+
+eureka:
+     instance:
+          hostname: localhost
+          port: 5002
+          preferIpAddress: false
+
+     client:
+          fetch-registry: true
+          register-with-eureka: true
+          service-url:
+               defaultZone: http://localhost:8070/eureka

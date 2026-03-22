@@ -1,10 +1,7 @@
 package com.salon.service;
 
 import com.salon.domain.BookingStatus;
-import com.salon.dto.BookingRequest;
-import com.salon.dto.SalonDTO;
-import com.salon.dto.ServiceDTO;
-import com.salon.dto.UserDTO;
+import com.salon.dto.*;
 import com.salon.model.Booking;
 import com.salon.model.SalonReport;
 
@@ -30,4 +27,6 @@ public interface BookingService {
     List<Booking> getBookingsByDate(LocalDate date, Long salonId);
 
     SalonReport getSalonReport(Long salonId);
+
+    Booking bookingSuccess(PaymentOrder paymentOrder) throws Exception;
 }

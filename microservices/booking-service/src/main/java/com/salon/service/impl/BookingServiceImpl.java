@@ -1,10 +1,7 @@
 package com.salon.service.impl;
 
 import com.salon.domain.BookingStatus;
-import com.salon.dto.BookingRequest;
-import com.salon.dto.SalonDTO;
-import com.salon.dto.ServiceDTO;
-import com.salon.dto.UserDTO;
+import com.salon.dto.*;
 import com.salon.model.Booking;
 import com.salon.model.SalonReport;
 import com.salon.repository.BookingRepository;
@@ -150,5 +147,12 @@ public class BookingServiceImpl implements BookingService {
         report.setTotalBookings(totalBookings);
 //        report.setSalonName();
         return report;
+    }
+
+    @Override
+    public Booking bookingSuccess(PaymentOrder order) throws Exception {
+        Booking existingBooking = getBookingById(order.getBookingId());
+        existingBooking.setStatus(BookingStatus.CONFIRMED);
+        return bookingRepository.save(existingBooking);
     }
 }

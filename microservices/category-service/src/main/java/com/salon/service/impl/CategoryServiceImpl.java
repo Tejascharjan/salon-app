@@ -32,18 +32,27 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category getCategoryById(Long categoryId) throws Exception {
         Category category = categoryRepository.findById(categoryId).orElse(null);
-        if(category == null) {
-            throw new Exception("category not exist with id: "+categoryId);
+        if (category == null) {
+            throw new Exception("category not exist with id: " + categoryId);
         }
         return category;
     }
 
     @Override
     public void deleteCategoryById(Long categoryId, Long salonId) throws Exception {
-        Category category= getCategoryById(categoryId);
-        if(!category.getSalonId().equals(salonId)) {
+        Category category = getCategoryById(categoryId);
+        if (!category.getSalonId().equals(salonId)) {
             throw new Exception("you dont have permission to delete category");
         }
         categoryRepository.deleteById(categoryId);
+    }
+
+    @Override
+    public Category findByIdAndSalonId(Long id, Long salonId) throws Exception {
+        Category category = categoryRepository.findByIdAndSalonId(id, salonId);
+        if (category == null) {
+            throw new Exception("Category canonot found");
+        }
+        return category;
     }
 }
