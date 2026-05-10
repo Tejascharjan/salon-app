@@ -21,7 +21,7 @@ public class ReviewServiceImpl implements ReviewService {
     public Review createReview(ReviewRequest req, UserDTO userDTO, SalonDTO salonDTO) {
         Review review = new Review();
         review.setReviewText(req.getReviewText());
-        review.setRating(review.getRating());
+        review.setRating(req.getRating());
         review.setUserId(userDTO.getId());
         review.setSalonId(salonDTO.getId());
 

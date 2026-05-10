@@ -18,6 +18,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     private final NotificationRepository notificationRepository;
     private final BookingFeignClient bookingFeignClient;
+    private final RealTimeCommunicationService realTimeCommunicationService;
 
     @Override
     public NotificationDTO createNotification(Notification notification) throws Exception {
@@ -25,7 +26,9 @@ public class NotificationServiceImpl implements NotificationService {
 
         BookingDTO bookingDTO = bookingFeignClient.getBookingById(savedNotification.getBookingId()).getBody();
 
-        return NotificationMapper.toDTO(savedNotification, bookingDTO);
+        NotificationDTO notificationDTO = NotificationMapper.toDTO(savedNotification, bookingDTO);
+        realTimeCommunicationService.sendNotification(notificationDTO);
+        return notificationDTO;
     }
 
     @Override
@@ -46,6 +49,6 @@ public class NotificationServiceImpl implements NotificationService {
                             notification.setIsRead(true);
                             return notificationRepository.save(notification);
                         }
-                ).orElseThrow(()-> new RuntimeException("Notification not found"));
+                ).orElseThrow(() -> new RuntimeException("Notification not found"));
     }
 }

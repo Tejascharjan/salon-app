@@ -16,4 +16,8 @@ public class BookingDTO {
     private Set<Long> serviceIds;
     private BookingStatus status = BookingStatus.PENDING;
     private int totalPrice;
+
+    private Set<ServiceDTO> services;
+    private UserDTO user;
+    private SalonDTO salon;
 }
