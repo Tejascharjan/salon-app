@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchSalonByOwner } from "../Redux/Salon/action";
 import { getUser } from "../Redux/Auth/action";
 import { fetchNotificationsBySalon } from "../Redux/Notifications/action";
-import { UseNotificationWebsocket } from "../Util/UseNotificationWebsocket";
+import { useNotificationWebsocket } from "../Util/UseNotificationWebsocket ";
 
 const SalonDashboard = () => {
      const dispatch = useDispatch();
@@ -28,7 +28,7 @@ const SalonDashboard = () => {
           }
      }, [salon.salon]);
 
-     UseNotificationWebsocket({ userId: salon.salon?.id, type: "salon" });
+     useNotificationWebsocket({ userId: salon.salon?.id, type: "salon" });
 
      return (
           <div className='min-h-screen'>

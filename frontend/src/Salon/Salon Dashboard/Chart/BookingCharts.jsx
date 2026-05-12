@@ -13,29 +13,33 @@ const BookingCharts = () => {
           dispatch(fetchBookings(localStorage.getItem("jwt")));
      }, []);
 
+     // ✅ Bug 1 Fixed - added return
      if (chart.bookings.loading) {
-          <Backdrop open={true}>
-               <CircularProgress color="inherit" />
-          </Backdrop>
+          return (
+               <Backdrop open={true}>
+                    <CircularProgress color="inherit" />
+               </Backdrop>
+          );
      }
 
      return (
           <div className='h-[40vh] w-full'>
                <ResponsiveContainer>
-                    <LineChart
+                    <LineChart                             
                          width={500}
                          height={300}
-                         responsive
-                         data={chart.bookings?.data}
+                         data={chart.bookings?.data || []}  // ✅ Bug 2 Fixed - fallback empty array
                          margin={{
                               top: 5,
                               right: 30,
                               left: 20,
                               bottom: 5,
                          }}>
-                         <XAxis dataKey='count' />
+                         <CartesianGrid strokeDasharray="3 3" />
+                         <XAxis dataKey='date' />            {/* ✅ Bug 3 Fixed - date not count */}
                          <YAxis />
                          <Tooltip />
+                         <Legend />
                          <Line type='monotone' dataKey='count' stroke='#8884d8' activeDot={{ r: 8 }} />
                     </LineChart>
                </ResponsiveContainer>

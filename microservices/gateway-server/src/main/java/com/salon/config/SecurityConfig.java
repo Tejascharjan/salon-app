@@ -29,7 +29,7 @@ public class SecurityConfig {
                 .pathMatchers("/api/notifications/ws/**").permitAll()
                 .pathMatchers("/api/categories/salon-owner/**",
                         "/api/notifications/salon-owner/**",
-                        "/api/service-oofring/salon-owner/**")
+                        "/api/service-offering/salon-owner/**")
                 .hasAnyRole("SALON_OWNER")
                 .pathMatchers("/api/salons/**",
                         "/api/categories/**",

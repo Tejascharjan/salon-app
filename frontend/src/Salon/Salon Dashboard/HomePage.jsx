@@ -26,7 +26,7 @@ const HomePage = () => {
                <div className='space-y-10 rounded-md w-full'>
                     <div className='border rounded-lg p-5 w-full'>
                          <h1 className='text-lg font-bold pb-5 text-primary-color'>Total Booking</h1>
-                         {/* <BookingCharts /> */}
+                         <BookingCharts />
                     </div>
                </div>
           </div>

@@ -15,9 +15,6 @@ const Notifications = () => {
           }
      }, [auth.user?.id]);
 
-     // realtime notifications
-
-
      return (
           <div className='px-5 md:flex flex-col items-center mt-10 min-h-screen'>
                <div>

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getUser, logout } from "../../Redux/Auth/action";
-import { UseNotificationWebsocket } from "../../Util/UseNotificationWebsocket";
+import { useNotificationWebsocket } from "../../Util/UseNotificationWebsocket ";
 
 const Navbar = () => {
      const [anchorEl, setAnchorEl] = useState(null);
@@ -29,7 +29,7 @@ const Navbar = () => {
           handleClose();
      };
 
-     UseNotificationWebsocket({ userId: auth.user?.id, type: "user" });
+     useNotificationWebsocket({ userId: auth.user?.id, type: "user" });
 
      return (
           <div className='z-50 px-6 flex items-center justify-between py-2'>
