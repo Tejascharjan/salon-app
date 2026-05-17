@@ -29,7 +29,7 @@ const CreateServiceForm = () => {
                description: "",
                price: "",
                duration: "",
-               category: "",
+               categoryId: "",
           },
           onSubmit: (values) => {
                dispatch(createServiceAction({service: values, jwt: localStorage.getItem("jwt")}));
@@ -141,13 +141,13 @@ const CreateServiceForm = () => {
 
                          <Grid size={12}>
                               <FormControl fullWidth>
-                                   <InputLabel id='category'>Category</InputLabel>
+                                   <InputLabel id='categoryId'>Category</InputLabel>
                                    <Select
-                                        labelId='category'
+                                        labelId='categoryId'
                                         id='demo-simple-select'
-                                        value={formik.values.category}
+                                        value={formik.values.categoryId}
                                         label='Category'
-                                        name='category'
+                                        name='categoryId'
                                         onChange={formik.handleChange}>
                                         {category.categories.map((item, index) => (
                                              <MenuItem value={item.id}>{item.name}</MenuItem>

@@ -24,15 +24,12 @@ export const createBooking =
      ({jwt, salonId, bookingData}) =>
      async (dispatch) => {
           dispatch({type: CREATE_BOOKING_REQUEST});
-          console.log("bookingData", bookingData);
-          console.log("jwt", jwt);
-          console.log("salonId", salonId);
           try {
                const {data} = await api.post(API_BASE_URL, bookingData, {
                     headers: {Authorization: `Bearer ${jwt}`},
                     params: {salonId, paymentMethod: "RAZORPAY"},
                });
-               window.location.href = data.payment_link_url;
+               window.location.href = data.paymentLinkUrl;
                dispatch({type: CREATE_BOOKING_SUCCESS, payload: data});
           } catch (error) {
                dispatch({type: CREATE_BOOKING_FAILURE, payload: error.response?.data?.message || error.message});

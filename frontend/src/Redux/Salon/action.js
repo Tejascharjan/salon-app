@@ -29,6 +29,7 @@ export const createSalon = (reqData) => async (dispatch) => {
      try {
           const userResponse = await api.post("/auth/signup", reqData.ownerDetails);
           const jwt = userResponse.data.jwt;
+          console.log("JWT token received", userResponse);
           localStorage.setItem("jwt", jwt);
 
           const response = await api.post(API_BASE_URL, reqData.salonDetails, {

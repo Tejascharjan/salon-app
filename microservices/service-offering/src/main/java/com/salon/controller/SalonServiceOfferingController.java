@@ -24,7 +24,7 @@ public class SalonServiceOfferingController {
     public ResponseEntity<ServiceOffering> createService(@RequestBody ServiceDTO serviceDTO,
                                                          @RequestHeader("Authorization") String jwt) throws Exception {
         SalonDTO salonDTO = salonFeignClient.getSalonByOwnerId(jwt).getBody();
-        CategoryDTO categoryDTO = categoryFeignClient.getCategoriesByIdAndSalon(serviceDTO.getCategoryId(), salonDTO.getId()).getBody();
+        CategoryDTO categoryDTO = categoryFeignClient.getCategoriesByIdAndSalon(salonDTO.getId(),serviceDTO.getCategoryId()).getBody();
 
         ServiceOffering serviceOfferings = serviceOfferingService.createService(salonDTO, serviceDTO, categoryDTO);
         return ResponseEntity.ok(serviceOfferings);

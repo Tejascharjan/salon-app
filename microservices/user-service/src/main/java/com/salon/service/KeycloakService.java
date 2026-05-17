@@ -24,8 +24,8 @@ public class KeycloakService {
     private static final String CLIENT_SECRET = "jDs2YWuKePAIiiJKYrYoLYDA6bep7nS7";
     private static final String GRANT_TYPE = "password";
     private static final String SCOPES = "openid profile email";
-    private static final String username = "master";
-    private static final String password = "admin@123";
+    private static final String username = "admin";
+    private static final String password = "admin";
     private static final String clientId = "272a5c0d-39ce-473f-8808-6172b890d9c8";
 
     private final RestTemplate restTemplate;

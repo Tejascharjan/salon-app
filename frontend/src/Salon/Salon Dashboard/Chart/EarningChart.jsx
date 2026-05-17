@@ -25,10 +25,10 @@ const EarningChart = () => {
      return (
           <div className='h-[40vh] w-full'>
                <ResponsiveContainer>
-                    <LineChart                        // ✅ Bug 4 Fixed - removed responsive prop
+                    <LineChart
                          width={500}
                          height={300}
-                         data={chart.earnings?.data || []}  // ✅ Bug 1 Fixed - fallback empty array
+                         data={chart.earnings?.data || []} 
                          margin={{
                               top: 5,
                               right: 30,
@@ -36,7 +36,7 @@ const EarningChart = () => {
                               bottom: 5,
                          }}>
                          <CartesianGrid strokeDasharray="3 3" />
-                         <XAxis dataKey='date' />            {/* ✅ Bug 3 Fixed - date not earnings */}
+                         <XAxis dataKey='date' />
                          <YAxis />
                          <Tooltip />
                          <Legend />

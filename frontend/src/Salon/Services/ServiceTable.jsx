@@ -81,7 +81,7 @@ export default function ServiceTable() {
                                              </div>
                                         </StyledTableCell>
                                         <StyledTableCell align='right'>{service.name}</StyledTableCell>
-                                        <StyledTableCell align='right'>{service}</StyledTableCell>
+                                        <StyledTableCell align='right'>{service.price}</StyledTableCell>
                                         <StyledTableCell align='right' className='space-y-2'>
                                              <IconButton>
                                                   <Edit />

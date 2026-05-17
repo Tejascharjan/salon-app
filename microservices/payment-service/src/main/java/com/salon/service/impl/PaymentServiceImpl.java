@@ -20,7 +20,6 @@ import com.stripe.model.checkout.Session;
 import com.stripe.param.checkout.SessionCreateParams;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -107,7 +106,7 @@ public class PaymentServiceImpl implements PaymentService {
 
         paymentLinkRequest.put("reminder_enable", true);
 
-        paymentLinkRequest.put("callback_url", "http://localhost:3000/payment-success/" + orderId);
+        paymentLinkRequest.put("callback_url", "http://localhost:5173/payment-success/" + orderId);
         paymentLinkRequest.put("callback_method", "get");
 
         return razorpay.paymentLink.create(paymentLinkRequest);
@@ -142,7 +141,7 @@ public class PaymentServiceImpl implements PaymentService {
             if (paymentOrder.getPaymentMethod().equals(PaymentMethod.RAZORPAY)) {
                 RazorpayClient razorpay=new RazorpayClient(razorPayApiKey,razorpayApiSecret);
                 Payment payment = razorpay.payments.fetch(paymentId);
-                Integer amount = payment.get("amount");
+                payment.get("amount");
                 String status = payment.get("status");
 
                 if(status.equals("captured")){
